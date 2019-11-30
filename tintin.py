@@ -12,9 +12,8 @@ bot = ChatBot(
     logic_adapters=[
         {	
             'import_path': 'chatterbot.logic.BestMatch',
-			#'import_path': 'chatterbot.logic.logic_adapter'
-			#'response_selection_method': 'get_first_response',
-            'maximum_similarity_threshold': 0.5
+			'default_response': "Can you repeat in a different way?",
+            'maximum_similarity_threshold': 0.1
         },
         {
             'import_path': 'chatterbot.logic.MathematicalEvaluation',
@@ -53,8 +52,8 @@ def get_bot_response():
 	if (userText.strip()=="bye"):
     		shutdown_server()
 	
-while True:
-	if __name__ == "__main__":
-		socketio.run(app)
-		break
+# while True:
+# 	if __name__ == "__main__":
+# 		socketio.run(app)
+# 		break
 		
