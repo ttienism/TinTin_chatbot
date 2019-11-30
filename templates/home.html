@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <title>TinTin</title>
+  <head>
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="https://drive.google.com/uc?id=189g1d3p1S6Kde4xHwEfxdads5cZVcOy_"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <style>
+      body {
+        font-family: monospace;
+		background-image: url="https://drive.google.com/uc?id=1sEDo1GYirefBPmPWHyW4WU2mzIWnZwCY"
+      }
+      h1 {
+        background-color: #4c0e6e;
+		color: white;
+        display: inline-block;
+        font-size: 3em;
+        margin: 0;
+        padding: 14px;
+      }
+      h3 {
+        color: white;
+        font-size: 20px;
+        margin-top: 3px;
+        text-align: center;
+      }
+      #chatbox {
+        margin-left: auto;
+        margin-right: auto;		
+        width: 40%;
+        margin-top: 60px;
+      }
+      #userInput {
+        margin-left: auto;
+        margin-right: auto;
+        width: 40%;
+        margin-top: 60px;
+      }
+      #textInput {
+        width: 90%;
+        border: 1px solid black;
+        font-family: monospace;
+        font-size: 17px;
+      }
+      .userText {
+        color: white;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: right;
+        line-height: 30px;
+      }
+      .userText span {
+        background-color: black;
+        padding: 10px;
+        border-radius: 2px;
+      }
+      .botText {
+        color: white;
+        font-family: monospace;
+        font-size: 17px;
+        text-align: left;
+        line-height: 30px;
+      }
+      .botText span {
+        background-color: #e08dce;
+        padding: 10px;
+        border-radius: 2px;
+      }
+      #tidbit {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 300px;
+      }
+      .boxed {
+        margin-left: auto;
+        margin-right: auto;
+        background-image: url("https://drive.google.com/uc?id=19t6I0qi8ajPxqF5TzpvYERs3Kx4D9Ofc");
+		width: 78%;
+        margin-top: 60px;
+        border: 2px solid black;
+      }
+      .box {
+        border: 2px solid black;
+      }
+    </style>
+  </head>
+  <body>
+	<div id="background" onclick="window.location.href="https://drive.google.com/uc?id=1sEDo1GYirefBPmPWHyW4WU2mzIWnZwCY"">
+	<center>
+		<h1>
+        <img
+          src="https://drive.google.com/uc?id=189g1d3p1S6Kde4xHwEfxdads5cZVcOy_"
+          alt="TINTIN"
+          style="width:40px;height:40px;"
+        />  Welcome to your favorite page
+      </h1>
+    </center>
+    <h3>
+    </h3>
+    <div class="box"></div>
+    <div class="boxed">
+      <div>
+        <div id="chatbox">
+          <img
+            src="https://drive.google.com/uc?id=189g1d3p1S6Kde4xHwEfxdads5cZVcOy_"
+            alt="TINTIN"
+            style="width:40px;height:40px;"
+          />
+          <p class="botText" name="botmsg">
+            <span>Hi! I'm TinTin ❤️</span>
+          </p>
+        </div>
+        <div id="userInput">
+          <input id="textInput" type="text" name="msg" placeholder="Message" />
+        </div>
+      </div>
+      <script>
+        $(document).ready(function() {
+          // Use a "/my_namespace" namespace.
+          namespace = '/my_namespace';
+	
+          // Connect to the Socket.IO server.
+          // The connection URL has the following format, 
+	          // relative to the current page:
+          // http[s]://<domain>:<port>[/<namespace>]
+          var socket = io(namespace);
+    
+	          // The callback function is invoked when a connection with the
+          // server is established.
+          socket.on('connect', function() {
+            socket.emit('my_event', {
+              data: 'I\'m connected!'
+            });
+          });
+    
+	          // Event handler for server sent data.
+          // The callback function is invoked whenever the server emits data
+          // to the client. The data is then displayed in the "Received"
+          // section of the page.
+          socket.on('i said', function(msg) {
+            $('#log').append('<br>' + $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html());
+          });
+        });
+        
+        function getBotResponse() {
+          var rawText = $("#textInput").val();
+          var userHtml = '<p class="userText"><span>' + rawText + "</span></p>";
+          $("#textInput").val("");
+          $("#chatbox").append(userHtml);
+          document
+            .getElementById("userInput")
+            .scrollIntoView({ block: "start", behavior: "smooth" });
+          $.get("/get", { msg: rawText }).done(function(data) {
+            var botHtml = '<p class="botText"><span>' + data + "</span></p>";
+            $("#chatbox").append(botHtml);
+            document
+              .getElementById("userInput")
+              .scrollIntoView({ block: "start", behavior: "smooth" });
+          });
+        }
+        $("#textInput").keypress(function(e) {
+          if (e.which == 13) {
+            getBotResponse();
+          }
+        });
+      </script>
+    </div>
+	</div>
+  </body>
+</html>
