@@ -52,8 +52,9 @@ def get_bot_response():
 	if (userText.strip()=="bye"):
     		shutdown_server()
 	
-# while True:
-# 	if __name__ == "__main__":
-# 		socketio.run(app)
-# 		break
+while True:
+ 	if __name__ == "__main__":
+ 		app.run()
+ 		break
 		
+#socketio.run(app)
