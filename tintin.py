@@ -13,12 +13,14 @@ bot = ChatBot(
         {	
             'import_path': 'chatterbot.logic.BestMatch',
 			'default_response': "Can you repeat in a different way?",
-            'maximum_similarity_threshold': 0.1
+            'maximum_similarity_threshold': 0.7
         },
         {
-            'import_path': 'chatterbot.logic.MathematicalEvaluation',
-			#'import_path': 'chatterbot.logic.logic_adapter'
-        }
+            'import_path': 'chatterbot.logic.MathematicalEvaluation'
+		}
+		# {
+		# 	'import_path': 'chatterbot.logic.TimeLogicAdapter'
+        # }
 		])
 
 #teaching the bot
@@ -44,6 +46,9 @@ def shutdown_server():
 @app.route("/")
 def home():
     return render_template("home.html")
+@socketio.on('message')
+def handle_message(message):
+    print('received message: ' + message)
 
 @app.route("/get")
 def get_bot_response():
@@ -54,7 +59,6 @@ def get_bot_response():
 	
 while True:
  	if __name__ == "__main__":
- 		app.run()
+ 		socketio.run(app)
  		break
 		
-#socketio.run(app)

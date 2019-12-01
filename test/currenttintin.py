@@ -11,9 +11,12 @@ bot = ChatBot(
     logic_adapters=[
         {
             'import_path': 'chatterbot.logic.BestMatch',
-            'threshold': 0.90,
-            'default_response': 'I am sorry, but I do not understand.'
-        }
+            'threshold': 0.70,
+            'default_response': 'Can you repeat in another way?'
+        },
+        {
+            'import_path': 'chatterbot.logic.MathematicalEvaluation'
+		}
     ],
     trainer='chatterbot.trainers.ListTrainer'
 )

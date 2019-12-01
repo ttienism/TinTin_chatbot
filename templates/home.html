@@ -96,7 +96,7 @@
           src="https://drive.google.com/uc?id=189g1d3p1S6Kde4xHwEfxdads5cZVcOy_"
           alt="TINTIN"
           style="width:40px;height:40px;"
-        />  Welcome to your favorite page
+        />  Welcome to your (least) favorite page
       </h1>
     </center>
     <h3>
@@ -118,33 +118,40 @@
           <input id="textInput" type="text" name="msg" placeholder="Message" />
         </div>
       </div>
-      <script>
-        $(document).ready(function() {
-          // Use a "/my_namespace" namespace.
-          namespace = '/my_namespace';
-	
-          // Connect to the Socket.IO server.
-          // The connection URL has the following format, 
-	          // relative to the current page:
-          // http[s]://<domain>:<port>[/<namespace>]
-          var socket = io(namespace);
-    
-	          // The callback function is invoked when a connection with the
-          // server is established.
-          socket.on('connect', function() {
-            socket.emit('my_event', {
-              data: 'I\'m connected!'
-            });
-          });
-    
-	          // Event handler for server sent data.
-          // The callback function is invoked whenever the server emits data
-          // to the client. The data is then displayed in the "Received"
-          // section of the page.
-          socket.on('i said', function(msg) {
-            $('#log').append('<br>' + $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html());
-          });
+      <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
+      <script type="text/javascript" charset="utf-8">
+        var socket = io();
+        socket.on('connect', function() {
+          socket.emit('my event', {data: 'I\'m connected!'});
         });
+      </script>
+      <script>
+        // $(document).ready(function() {
+        //   // Use a "/my_namespace" namespace.
+        //   namespace = '/my_namespace';
+	
+        //   // Connect to the Socket.IO server.
+        //   // The connection URL has the following format, 
+	      //     // relative to the current page:
+        //   // http[s]://<domain>:<port>[/<namespace>]
+        //   var socket = io(namespace);
+    
+	      //     // The callback function is invoked when a connection with the
+        //   // server is established.
+        //   socket.on('connect', function() {
+        //     socket.emit('my_event', {
+        //       data: 'I\'m connected!'
+        //     });
+        //   });
+    
+	      //     // Event handler for server sent data.
+        //   // The callback function is invoked whenever the server emits data
+        //   // to the client. The data is then displayed in the "Received"
+        //   // section of the page.
+        //   socket.on('i said', function(msg) {
+        //     $('#log').append('<br>' + $('<div/>').text('Received #' + msg.count + ': ' + msg.data).html());
+        //   });
+        // });
         
         function getBotResponse() {
           var rawText = $("#textInput").val();
